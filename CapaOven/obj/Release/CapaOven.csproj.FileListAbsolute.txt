@@ -1,0 +1,10 @@
+d:\CAPA\documents\visual studio 2015\Projects\CapaOven\CapaOven\bin\Release\CapaOven.exe.config
+d:\CAPA\documents\visual studio 2015\Projects\CapaOven\CapaOven\bin\Release\CapaOven.exe
+d:\CAPA\documents\visual studio 2015\Projects\CapaOven\CapaOven\bin\Release\CapaOven.pdb
+d:\CAPA\documents\visual studio 2015\Projects\CapaOven\CapaOven\bin\Release\Microsoft.WindowsAPICodePack.dll
+d:\CAPA\documents\visual studio 2015\Projects\CapaOven\CapaOven\bin\Release\Microsoft.WindowsAPICodePack.Shell.dll
+d:\CAPA\documents\visual studio 2015\Projects\CapaOven\CapaOven\obj\Release\CapaOven.Form1.resources
+d:\CAPA\documents\visual studio 2015\Projects\CapaOven\CapaOven\obj\Release\CapaOven.Properties.Resources.resources
+d:\CAPA\documents\visual studio 2015\Projects\CapaOven\CapaOven\obj\Release\CapaOven.csproj.GenerateResource.Cache
+d:\CAPA\documents\visual studio 2015\Projects\CapaOven\CapaOven\obj\Release\CapaOven.exe
+d:\CAPA\documents\visual studio 2015\Projects\CapaOven\CapaOven\obj\Release\CapaOven.pdb

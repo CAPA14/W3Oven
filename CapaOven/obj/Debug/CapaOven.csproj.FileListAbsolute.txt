@@ -1,0 +1,11 @@
+d:\capa\documents\visual studio 2015\Projects\CapaOven\CapaOven\bin\Debug\CapaOven.exe.config
+d:\capa\documents\visual studio 2015\Projects\CapaOven\CapaOven\bin\Debug\CapaOven.exe
+d:\capa\documents\visual studio 2015\Projects\CapaOven\CapaOven\bin\Debug\CapaOven.pdb
+d:\capa\documents\visual studio 2015\Projects\CapaOven\CapaOven\obj\Debug\CapaOven.Form1.resources
+d:\capa\documents\visual studio 2015\Projects\CapaOven\CapaOven\obj\Debug\CapaOven.Properties.Resources.resources
+d:\capa\documents\visual studio 2015\Projects\CapaOven\CapaOven\obj\Debug\CapaOven.csproj.GenerateResource.Cache
+d:\capa\documents\visual studio 2015\Projects\CapaOven\CapaOven\obj\Debug\CapaOven.exe
+d:\capa\documents\visual studio 2015\Projects\CapaOven\CapaOven\obj\Debug\CapaOven.pdb
+d:\CAPA\documents\visual studio 2015\Projects\CapaOven\CapaOven\bin\Debug\Microsoft.WindowsAPICodePack.dll
+d:\CAPA\documents\visual studio 2015\Projects\CapaOven\CapaOven\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
+d:\CAPA\documents\visual studio 2015\Projects\CapaOven\CapaOven\obj\Debug\CapaOven.csprojResolveAssemblyReference.cache

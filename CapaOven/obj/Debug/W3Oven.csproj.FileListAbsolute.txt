@@ -1,0 +1,11 @@
+d:\CAPA\documents\visual studio 2015\Projects\CapaOven\CapaOven\bin\Debug\Microsoft.WindowsAPICodePack.dll
+d:\CAPA\documents\visual studio 2015\Projects\CapaOven\CapaOven\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
+d:\CAPA\documents\visual studio 2015\Projects\CapaOven\CapaOven\obj\Debug\CapaOven.Form1.resources
+d:\CAPA\documents\visual studio 2015\Projects\CapaOven\CapaOven\obj\Debug\CapaOven.Properties.Resources.resources
+d:\CAPA\documents\visual studio 2015\Projects\CapaOven\CapaOven\obj\Debug\W3Oven.csproj.GenerateResource.Cache
+d:\CAPA\documents\visual studio 2015\Projects\CapaOven\CapaOven\bin\Debug\W3Oven.exe.config
+d:\CAPA\documents\visual studio 2015\Projects\CapaOven\CapaOven\bin\Debug\W3Oven.exe
+d:\CAPA\documents\visual studio 2015\Projects\CapaOven\CapaOven\bin\Debug\W3Oven.pdb
+d:\CAPA\documents\visual studio 2015\Projects\CapaOven\CapaOven\obj\Debug\W3Oven.exe
+d:\CAPA\documents\visual studio 2015\Projects\CapaOven\CapaOven\obj\Debug\W3Oven.pdb
+d:\CAPA\documents\visual studio 2015\Projects\CapaOven\CapaOven\obj\Debug\W3Oven.csprojResolveAssemblyReference.cache
