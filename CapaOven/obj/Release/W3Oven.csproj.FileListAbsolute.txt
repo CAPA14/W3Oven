@@ -9,3 +9,14 @@ D:\CAPA\Documents\Visual Studio 2015\Projects\CapaOven\CapaOven\obj\Release\W3Ov
 D:\CAPA\Documents\Visual Studio 2015\Projects\CapaOven\CapaOven\obj\Release\W3Oven.exe
 D:\CAPA\Documents\Visual Studio 2015\Projects\CapaOven\CapaOven\obj\Release\W3Oven.pdb
 D:\CAPA\Documents\Visual Studio 2015\Projects\CapaOven\CapaOven\obj\Release\W3Oven.csprojResolveAssemblyReference.cache
+D:\CAPA\Documents\GitHub\W3Oven\CapaOven\bin\Release\W3Oven.exe.config
+D:\CAPA\Documents\GitHub\W3Oven\CapaOven\obj\Release\W3Oven.exe
+D:\CAPA\Documents\GitHub\W3Oven\CapaOven\obj\Release\W3Oven.pdb
+D:\CAPA\Documents\GitHub\W3Oven\CapaOven\bin\Release\W3Oven.exe
+D:\CAPA\Documents\GitHub\W3Oven\CapaOven\bin\Release\W3Oven.pdb
+D:\CAPA\Documents\GitHub\W3Oven\CapaOven\bin\Release\Microsoft.WindowsAPICodePack.dll
+D:\CAPA\Documents\GitHub\W3Oven\CapaOven\bin\Release\Microsoft.WindowsAPICodePack.Shell.dll
+D:\CAPA\Documents\GitHub\W3Oven\CapaOven\obj\Release\W3Oven.csprojResolveAssemblyReference.cache
+D:\CAPA\Documents\GitHub\W3Oven\CapaOven\obj\Release\CapaOven.Form1.resources
+D:\CAPA\Documents\GitHub\W3Oven\CapaOven\obj\Release\CapaOven.Properties.Resources.resources
+D:\CAPA\Documents\GitHub\W3Oven\CapaOven\obj\Release\W3Oven.csproj.GenerateResource.Cache

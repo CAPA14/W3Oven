@@ -29,19 +29,28 @@ namespace CapaOven
         string noUncookFrom = "Browse the path to 'content' folder of the Game or Mod/DLC";
         string noExpDir = "Browse the folder where the assets you want to Export are";
         string noExpOutDir = "Browse the path to folder to where you want to export";
+        string noComboModname = "Type a Mod Name or Select a Mod";
+        string noWorkspace = "Browse the folder where you want or stores your mods";
+
 
 
         public Form1()
         {
-            
+
             InitializeComponent();
 
             string test;
             test = ConfigurationManager.AppSettings["UncookedPath"];
-            if(test != null) { txtUncooked.Text = test; SetFontStyle(txtUncooked, "White", false); }
+            if (test != null) { txtUncooked.Text = test; SetFontStyle(txtUncooked, "White", false); }
 
             test = ConfigurationManager.AppSettings["WccPath"];
             if (test != null) { txtWcc.Text = test; SetFontStyle(txtWcc, "White", false); }
+                        
+            test = ConfigurationManager.AppSettings["WorkspacePath"];
+            if (test != null) {
+                txtWorkspace.Text = test; SetFontStyle(txtWorkspace, "White", false);
+                RefreshComboMods();
+            }
 
             comboBox1.SelectedIndex = 0;
             comboBox2.SelectedIndex = 1;
@@ -76,10 +85,10 @@ namespace CapaOven
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+
             openFileDialog1.Filter = "wcc_lite.exe|wcc_lite.exe";
             openFileDialog1.Title = "Select wcc_lite.exe";
-            openFileDialog1.ShowDialog();     
+            openFileDialog1.ShowDialog();
 
         }
 
@@ -124,45 +133,45 @@ namespace CapaOven
                 return;
             }
 
-           if (assets != null && !checkBox3.Checked)
-           {
-            
-            //Prepare outStrings
+            if (assets != null && !checkBox3.Checked)
+            {
 
-            foreach (string str in assets)
+                //Prepare outStrings
+
+                foreach (string str in assets)
+                {
+
+                    if (!checkBox1.Checked || (dataGridView1.Rows[i].Selected))
                     {
 
-                        if (!checkBox1.Checked || (dataGridView1.Rows[i].Selected))
+                        strOut = str;
+
+                        strOut = strOut.Replace("modded", "uncooked");
+                        strOut = strOut.Replace(".tga", ".xbm");
+                        strOut = strOut.Replace(".png", ".xbm");
+                        strOut = strOut.Replace(".jpg", ".xbm");
+                        strOut = strOut.Replace(".dds", ".xbm");
+                        strOut = strOut.Replace(".fbx", ".w2mesh");
+
+
+                        //Prepare Arguments of Import
+                        cmdImportArgs = cmdImportArgs + "wcc_lite.exe"
+                                        + " import " + "-depot=" + "\"" + txtUncooked.Text + "\""
+                                         + " -file=" + "\"" + str + "\"" +
+                                        " -out=" + "\"" + strOut + "\"";
+
+                        if (dataGridView1.Rows[i].Cells["texturetypeColumn"].Value != null)
                         {
 
-                            strOut = str;
-
-                            strOut = strOut.Replace("modded", "uncooked");
-                            strOut = strOut.Replace(".tga", ".xbm");
-                            strOut = strOut.Replace(".png", ".xbm");
-                            strOut = strOut.Replace(".jpg", ".xbm");
-                            strOut = strOut.Replace(".dds", ".xbm");
-                            strOut = strOut.Replace(".fbx", ".w2mesh");
-
-
-                            //Prepare Arguments of Import
-                            cmdImportArgs = cmdImportArgs + "wcc_lite.exe"
-                                            + " import " + "-depot=" + "\"" + txtUncooked.Text + "\""
-                                             + " -file=" + "\"" + str + "\"" +
-                                            " -out=" + "\"" + strOut + "\"";
-
-                            if (dataGridView1.Rows[i].Cells["texturetypeColumn"].Value != null)
-                            {
-
-                                cmdImportArgs = cmdImportArgs + " -texturegroup=" + dataGridView1.Rows[i].Cells["texturetypeColumn"].Value;
-                            }
-                            
-                            cmdImportArgs = cmdImportArgs + " & ";
+                            cmdImportArgs = cmdImportArgs + " -texturegroup=" + dataGridView1.Rows[i].Cells["texturetypeColumn"].Value;
                         }
 
-                        i++;
+                        cmdImportArgs = cmdImportArgs + " & ";
+                    }
 
-                    } //End of Import Args    
+                    i++;
+
+                } //End of Import Args    
             }
             else if (checkBox3.Checked) {
                 Console.WriteLine("\n\nINFO --- Skipping Import!");
@@ -175,51 +184,51 @@ namespace CapaOven
             }
 
             //Cook Arguments
-            cmdImportArgs = cmdImportArgs + "wcc_lite.exe cook -platform=pc -mod=" +"\""+ txtModFolder.Text + @"\uncooked" + "\"" + " -basedir=" + "\"" + txtModFolder.Text + @"\uncooked" + "\"" + " -outdir=" + "\"" + txtModFolder.Text + @"\cooked" + "\"";
-                
-                //Build Cache Arguments
-                cmdImportArgs = cmdImportArgs + " & wcc_lite.exe buildcache textures -platform=pc -basedir=" + "\"" + txtModFolder.Text + @"\uncooked" + "\"" + " -db=" + "\"" + txtModFolder.Text + @"\cooked\cook.db" + "\""+ " -out=" + "\"" + txtModFolder.Text + @"\packed\" + txtModName.Text + @"\content\texture.cache" + "\"";
+            cmdImportArgs = cmdImportArgs + "wcc_lite.exe cook -platform=pc -mod=" + "\"" + txtModFolder.Text + @"\uncooked" + "\"" + " -basedir=" + "\"" + txtModFolder.Text + @"\uncooked" + "\"" + " -outdir=" + "\"" + txtModFolder.Text + @"\cooked" + "\"";
 
-                if (!checkBox2.Checked)
+            //Build Cache Arguments
+            cmdImportArgs = cmdImportArgs + " & wcc_lite.exe buildcache textures -platform=pc -basedir=" + "\"" + txtModFolder.Text + @"\uncooked" + "\"" + " -db=" + "\"" + txtModFolder.Text + @"\cooked\cook.db" + "\"" + " -out=" + "\"" + txtModFolder.Text + @"\packed\" + txtModName.Text + @"\content\texture.cache" + "\"";
+
+            if (!checkBox2.Checked)
+            {
+                //Pack Arguments
+                cmdImportArgs = cmdImportArgs + " & wcc_lite pack -dir=" + "\"" + txtModFolder.Text + @"\Cooked" + "\"" + " -outdir=" + "\"" + txtModFolder.Text + @"\Packed\" + txtModName.Text + @"\content" + "\"";
+
+                //Generate Metadata Arguments
+                cmdImportArgs = cmdImportArgs + " & wcc_lite metadatastore -path=" + "\"" + txtModFolder.Text + @"\Packed\" + txtModName.Text + @"\content" + "\"";
+            }
+            Console.WriteLine("\nINFO --- Executing Lines ---\n");
+            Console.WriteLine(cmdImportArgs.Replace("&", "\r\n"));
+            Console.WriteLine("\nINFO --- Started Cooking Mod ---\n");
+
+
+            //Call the fuking CMD
+            Process p = new Process();
+            p.StartInfo.RedirectStandardError = true;
+            p.StartInfo.RedirectStandardOutput = true;
+            p.StartInfo.UseShellExecute = false;
+            p.StartInfo.CreateNoWindow = true;
+            p.StartInfo.FileName = "cmd.exe";
+            p.StartInfo.WorkingDirectory = (txtWcc.Text).Replace("wcc_lite.exe", "");
+
+
+            p.StartInfo.Arguments = cmdImportArgs;
+
+            p.OutputDataReceived += new DataReceivedEventHandler(
+                (s, ev) =>
                 {
-                    //Pack Arguments
-                    cmdImportArgs = cmdImportArgs + " & wcc_lite pack -dir=" + "\"" + txtModFolder.Text + @"\Cooked" + "\"" + " -outdir=" + "\"" + txtModFolder.Text + @"\Packed\" + txtModName.Text + @"\content" + "\"";
-
-                    //Generate Metadata Arguments
-                    cmdImportArgs = cmdImportArgs + " & wcc_lite metadatastore -path=" + "\"" + txtModFolder.Text + @"\Packed\" + txtModName.Text + @"\content" + "\"";
+                    Console.WriteLine(ev.Data);
                 }
-                Console.WriteLine("\nINFO --- Executing Lines ---\n");
-                Console.WriteLine(cmdImportArgs.Replace("&", "\r\n"));
-                Console.WriteLine("\nINFO --- Started Cooking Mod ---\n");
-                
-                
-                //Call the fuking CMD
-                Process p = new Process();
-                p.StartInfo.RedirectStandardError = true;
-                p.StartInfo.RedirectStandardOutput = true;
-                p.StartInfo.UseShellExecute = false;
-                p.StartInfo.CreateNoWindow = true;
-                p.StartInfo.FileName = "cmd.exe";
-                p.StartInfo.WorkingDirectory = (txtWcc.Text).Replace("wcc_lite.exe", "");
-                 
-                    
-                    p.StartInfo.Arguments = cmdImportArgs;
+            );
+            p.ErrorDataReceived += new DataReceivedEventHandler((s, ev) => { Console.WriteLine(ev.Data); });
 
-                    p.OutputDataReceived += new DataReceivedEventHandler(
-                        (s, ev) =>
-                        {
-                            Console.WriteLine(ev.Data);
-                        }
-                    );
-                    p.ErrorDataReceived += new DataReceivedEventHandler((s, ev) => { Console.WriteLine(ev.Data); });
+            p.Start();
+            p.BeginOutputReadLine();
+            p.EnableRaisingEvents = true;
+            p.Exited += (s, ev) => {
+                Console.WriteLine("INFO --- Done!"); };
 
-                    p.Start();
-                    p.BeginOutputReadLine();
-                    p.EnableRaisingEvents = true;
-                    p.Exited += (s, ev) => {
-                        Console.WriteLine("INFO --- Done!");  };
 
-            
         }
 
         private void button3_ClickAlt(object sender, EventArgs e)
@@ -256,9 +265,9 @@ namespace CapaOven
 
             if (assets != null && !checkBox3.Checked)
             {
-                Array.Resize(ref processes, assets.Count()+4);
-                Array.Resize(ref args, assets.Count()+4);
-                
+                Array.Resize(ref processes, assets.Count() + 4);
+                Array.Resize(ref args, assets.Count() + 4);
+
                 //Prepare outStrings
                 foreach (string str in assets)
                 {
@@ -277,7 +286,7 @@ namespace CapaOven
 
 
                         //Prepare Arguments of Import
-                        args[i] = args[i] 
+                        args[i] = args[i]
                                         + " import " + "-depot=" + "\"" + txtUncooked.Text + "\""
                                          + " -file=" + "\"" + str + "\"" +
                                         " -out=" + "\"" + strOut + "\"";
@@ -295,7 +304,7 @@ namespace CapaOven
                 } //End of Import Args  
 
                 //Call the import chain!
-                
+
 
             }
             else if (checkBox3.Checked)
@@ -310,7 +319,7 @@ namespace CapaOven
                 Console.WriteLine("\nERROR --- Assets not loaded! To load assets select a valid 'Mod Diretory'\n");
                 return;
             }
-            
+
             //Cook Arguments
             args[i] = args[i] + " cook -platform=pc -mod=" + "\"" + txtModFolder.Text + @"\uncooked" + "\"" + " -basedir=" + "\"" + txtModFolder.Text + @"\uncooked" + "\"" + " -outdir=" + "\"" + txtModFolder.Text + @"\cooked" + "\"";
 
@@ -328,16 +337,16 @@ namespace CapaOven
                 args[i] = args[i] + " metadatastore -path=" + "\"" + txtModFolder.Text + @"\Packed\" + txtModName.Text + @"\content" + "\"";
             }
             Console.WriteLine("\r\n\nINFO --- Executing Lines ---\n\n");
-            foreach(string st in args)
+            foreach (string st in args)
             {
-                if(st != null)
-                Console.WriteLine("wcc_lite.exe" + st);
+                if (st != null)
+                    Console.WriteLine("wcc_lite.exe" + st);
             }
             Console.WriteLine("\r\n\nINFO --- Started Cooking Mod ---\n\n");
-                
+
 
             RunProcessesSequence(processes, args, 0, "Build mod");
-            
+
         }
 
 
@@ -362,16 +371,17 @@ namespace CapaOven
 
         }
 
-        
+
 
         private void openFileDialog2_FileOk(object sender, CancelEventArgs e)
         {
-   
+
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            string fullPath;
+            string fullPath, filename, texgroup;
+            texgroup = null;
             int rowId;//Needed for the datagrid filling
             DataGridViewRow row;
 
@@ -384,11 +394,11 @@ namespace CapaOven
 
                 if (Directory.Exists(fullPath)) {
                     Console.WriteLine("--- Loading Assets from \"Modded\" folder ---");
-                    
+
                     //Gets recursive the files with specific extensions
                     var files = Directory.EnumerateFiles(fullPath, "*.*", SearchOption.AllDirectories)
-                    .Where(s => 
-                    s.EndsWith(".tga",StringComparison.CurrentCultureIgnoreCase) 
+                    .Where(s =>
+                    s.EndsWith(".tga", StringComparison.CurrentCultureIgnoreCase)
                     || s.EndsWith(".png", StringComparison.CurrentCultureIgnoreCase)
                     || s.EndsWith(".jp*", StringComparison.CurrentCultureIgnoreCase)
                     || s.EndsWith(".fbx", StringComparison.CurrentCultureIgnoreCase)
@@ -408,25 +418,113 @@ namespace CapaOven
                         // Adds a new row
                         row = dataGridView1.Rows[rowId];
 
+                        filename = Path.GetFileNameWithoutExtension(str);
+                        if (filename.EndsWith("_d01") || filename.EndsWith("_d") || filename.EndsWith("_a01")){
+                            texgroup = "WorldDiffuse";
+                        }
+                        else if (filename.EndsWith("_n01") || filename.EndsWith("_n"))
+                        {
+                            texgroup = "NormalmapGloss";
+                        }
+                        else if (filename.EndsWith("_s01") || filename.EndsWith("_s") || filename.EndsWith("_s02"))
+                        {
+                            texgroup = "WorldSpecular";
+                        }
+                        else if (filename.EndsWith("_e01"))
+                        {
+                            texgroup = "WorldEmissive";
+                        }
+                        else
+                        {
+                            texgroup = null;
+                        }
+
                         // Add the data
-                        row.Cells["assetsColumn"].Value = str.Replace(fullPath,"");
-                        row.Cells["texturetypeColumn"].Value = null;
-                                        
+                        row.Cells["assetsColumn"].Value = str.Replace(fullPath, "");
+                        row.Cells["texturetypeColumn"].Value = texgroup;
+
 
                         Console.WriteLine(str);
-                    
+
                     }
                     Console.WriteLine("--- Assets Loaded from Modded folder ---");
-                    txtModFolder.ForeColor = Color.FromName("White");
-                    txtModFolder.Font = new Font(txtModFolder.Font.Name, txtModFolder.Font.Size, FontStyle.Regular);
+                    SetFontStyle(txtModFolder, "White", false);
                 }
                 else { Console.WriteLine("ERROR --- The specified 'Mod Directory' does not contain a \"Modded\" folder"); }
             }
         }
 
-        private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
+       private void RefreshCookAssets()
         {
+            string fullPath, filename, texgroup;
+            texgroup = null;
+            int rowId;//Needed for the datagrid filling
+            DataGridViewRow row;
 
+                            
+                fullPath = txtModFolder.Text + @"\modded";
+
+                if (Directory.Exists(fullPath))
+                {
+                    Console.WriteLine("--- Loading Assets from \"Modded\" folder ---");
+
+                    //Gets recursive the files with specific extensions
+                    var files = Directory.EnumerateFiles(fullPath, "*.*", SearchOption.AllDirectories)
+                    .Where(s =>
+                    s.EndsWith(".tga", StringComparison.CurrentCultureIgnoreCase)
+                    || s.EndsWith(".png", StringComparison.CurrentCultureIgnoreCase)
+                    || s.EndsWith(".jp*", StringComparison.CurrentCultureIgnoreCase)
+                    || s.EndsWith(".fbx", StringComparison.CurrentCultureIgnoreCase)
+                    || s.EndsWith(".dds", StringComparison.CurrentCultureIgnoreCase)
+                    );
+
+                    assets = files; //Stores files to a IEnumerable<string>
+
+                    //Clears the table before filling
+                    dataGridView1.Rows.Clear();
+                    dataGridView1.Refresh();
+
+                    foreach (string str in files)
+                    {
+                        rowId = dataGridView1.Rows.Add();
+
+                        // Adds a new row
+                        row = dataGridView1.Rows[rowId];
+
+                        filename = Path.GetFileNameWithoutExtension(str);
+                    if (filename.EndsWith("_d01") || filename.EndsWith("_d") || filename.EndsWith("_a01"))
+                    {
+                        texgroup = "WorldDiffuse";
+                    }
+                    else if (filename.EndsWith("_n01") || filename.EndsWith("_n"))
+                    {
+                        texgroup = "NormalmapGloss";
+                    }
+                    else if (filename.EndsWith("_s01") || filename.EndsWith("_s") || filename.EndsWith("_s02"))
+                    {
+                        texgroup = "WorldSpecular";
+                    }
+                    else if (filename.EndsWith("_e01"))
+                    {
+                        texgroup = "WorldEmissive";
+                    }
+                    else
+                    {
+                        texgroup = null;
+                    }
+
+                    // Add the data
+                    row.Cells["assetsColumn"].Value = str.Replace(fullPath, "");
+                        row.Cells["texturetypeColumn"].Value = texgroup;
+
+
+                        Console.WriteLine(str);
+
+                    }
+                    Console.WriteLine("--- Assets Loaded from Modded folder ---");
+                    SetFontStyle(txtModFolder, "White", false);
+                    SetFontStyle(txtModName, "White", false);
+                }
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -434,7 +532,7 @@ namespace CapaOven
 
             //WindowState = FormWindowState.Minimized;
             Close();
-           
+
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -447,26 +545,27 @@ namespace CapaOven
                 SetFontStyle(txtUncookTo, "White", false);
             }
         }
-        
+
         private void modname_OnFocusEnter(object sender, EventArgs e)
         {
-            if(txtModName.Text == noModName) {
-                      
+            if (txtModName.Text == noModName) {
+
                 txtModName.Text = "";
                 SetFontStyle(txtModName, "White", false);
             }
-                        
+
         }
         private void modname_OnFocusLeave(object sender, EventArgs e)
         {
             if (txtModName.Text == "") {
-                                
+
                 txtModName.Text = noModName;
                 SetFontStyle(txtModName, "Gray", true);
 
             }
 
         }
+
 
         private void modDir_OnFocusEnter(object sender, EventArgs e)
         {
@@ -576,6 +675,28 @@ namespace CapaOven
 
         }
 
+        private void comboModname_OnFocusEnter(object sender, EventArgs e)
+        {
+            if (comboModname.Text == noComboModname)
+            {
+
+                comboModname.Text = "";
+                SetFontStyleCombo(comboModname, "White", false);
+            }
+
+        }
+        private void comboModname_OnFocusLeave(object sender, EventArgs e)
+        {
+            if (comboModname.Text == "")
+            {
+
+                comboModname.Text = noComboModname;
+                SetFontStyleCombo(comboModname, "Gray", true);
+
+            }
+
+        }
+
         public void SetFontStyle(TextBox txtbox, string color, bool setItalic)
         {
             txtbox.ForeColor = Color.FromName(color);
@@ -587,6 +708,20 @@ namespace CapaOven
             else
             {
                 txtbox.Font = new Font(txtbox.Font.Name, txtbox.Font.Size, FontStyle.Regular);
+            }
+        }
+
+        public void SetFontStyleCombo(ComboBox combo, string color, bool setItalic)
+        {
+            combo.ForeColor = Color.FromName(color);
+            if (setItalic)
+            {
+                combo.Font = new Font(combo.Font.Name, combo.Font.Size, FontStyle.Italic);
+
+            }
+            else
+            {
+                combo.Font = new Font(combo.Font.Name, combo.Font.Size, FontStyle.Regular);
             }
         }
 
@@ -615,43 +750,43 @@ namespace CapaOven
             if (imgformat == null) { imgformat = "tga"; }
 
             cmdArgs = cmdArgs + " -imgfmt=" + imgformat + " -skiperrors";
-            
+
             Console.WriteLine("\nINFO --- Executing Lines ---\r\n");
             Console.WriteLine("\n" + cmdArgs + "\n");
             Console.WriteLine("\r\nINFO --- Started Uncooking ---\n");
-                
-                
-                //Call the fuking CMD
-                Process p = new Process();
-                p.StartInfo.RedirectStandardError = true;
-                p.StartInfo.RedirectStandardOutput = true;
-                p.StartInfo.UseShellExecute = false;
-                p.StartInfo.CreateNoWindow = true;
-                p.StartInfo.FileName = "cmd.exe";
-                p.StartInfo.WorkingDirectory = (txtWcc.Text).Replace("wcc_lite.exe", "");
 
-                p.StartInfo.Arguments = cmdArgs; //Arguments
 
-                    p.OutputDataReceived += new DataReceivedEventHandler(
-                        (s, ev) =>
-                        {
-                            Console.WriteLine(ev.Data);
-                        }
-                    );
-                    p.ErrorDataReceived += new DataReceivedEventHandler((s, ev) => { Console.WriteLine(ev.Data); });
+            //Call the fuking CMD
+            Process p = new Process();
+            p.StartInfo.RedirectStandardError = true;
+            p.StartInfo.RedirectStandardOutput = true;
+            p.StartInfo.UseShellExecute = false;
+            p.StartInfo.CreateNoWindow = true;
+            p.StartInfo.FileName = "cmd.exe";
+            p.StartInfo.WorkingDirectory = (txtWcc.Text).Replace("wcc_lite.exe", "");
 
-                    p.Start();
-                    p.BeginOutputReadLine();
-                    p.EnableRaisingEvents = true;
-                    p.Exited += (s, ev) => {
-                        Console.WriteLine("INFO --- Done Uncooking!");  };
-                        
+            p.StartInfo.Arguments = cmdArgs; //Arguments
+
+            p.OutputDataReceived += new DataReceivedEventHandler(
+                (s, ev) =>
+                {
+                    Console.WriteLine(ev.Data);
+                }
+            );
+            p.ErrorDataReceived += new DataReceivedEventHandler((s, ev) => { Console.WriteLine(ev.Data); });
+
+            p.Start();
+            p.BeginOutputReadLine();
+            p.EnableRaisingEvents = true;
+            p.Exited += (s, ev) => {
+                Console.WriteLine("INFO --- Done Uncooking!"); };
+
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
-            if(txtUncooked.Text != noUncookedPath)
-            txtUncookTo.Text = txtUncooked.Text;
+            if (txtUncooked.Text != noUncookedPath)
+                txtUncookTo.Text = txtUncooked.Text;
         }
 
         private void button9_Click(object sender, EventArgs e)
@@ -667,13 +802,13 @@ namespace CapaOven
 
         private void button7_Click_1(object sender, EventArgs e)
         {
-            
+
             int rowId;//Needed for the datagrid filling
             IEnumerable<string> files = null;
             DataGridViewRow row;
 
             CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            if(txtUncooked.Text != noUncookedPath) { dialog.InitialDirectory = txtUncooked.Text; }
+            if (txtUncooked.Text != noUncookedPath) { dialog.InitialDirectory = txtUncooked.Text; }
             if (txtExpDir.Text != noExpDir) { dialog.InitialDirectory = txtExpDir.Text; }
             dialog.IsFolderPicker = true;
             dialog.ShowPlacesList = true;
@@ -681,11 +816,11 @@ namespace CapaOven
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 txtExpDir.Text = dialog.FileName;
-                                
-                    Console.WriteLine("--- Loading Exportable Assets from selected folder ---");
 
-                    //Gets recursive the files with specific extensions
-                    switch (comboBox4.SelectedIndex){
+                Console.WriteLine("--- Loading Exportable Assets from selected folder ---");
+
+                //Gets recursive the files with specific extensions
+                switch (comboBox4.SelectedIndex) {
 
                     case 0:
                         files = Directory.EnumerateFiles(txtExpDir.Text, "*.*", SearchOption.AllDirectories)
@@ -696,11 +831,11 @@ namespace CapaOven
                         );
                         break;
                     case 1:
-                    files = Directory.EnumerateFiles(txtExpDir.Text, "*.*", SearchOption.AllDirectories)
-                    .Where(s =>
-                    s.EndsWith(".xbm", StringComparison.CurrentCultureIgnoreCase)
+                        files = Directory.EnumerateFiles(txtExpDir.Text, "*.*", SearchOption.AllDirectories)
+                        .Where(s =>
+                        s.EndsWith(".xbm", StringComparison.CurrentCultureIgnoreCase)
 
-                    );
+                        );
                         break;
                     case 2:
                         files = Directory.EnumerateFiles(txtExpDir.Text, "*.*", SearchOption.AllDirectories)
@@ -710,34 +845,34 @@ namespace CapaOven
                         );
 
                         break;
-                    
-                    }
-                    
-                
-                    expassets = files; //Stores files to a IEnumerable<string>
 
-                    //Clears the table before filling
-                    dataGridView2.Rows.Clear();
-                    dataGridView2.Refresh();
+                }
 
-                    foreach (string str in files)
-                    {
-                        rowId = dataGridView2.Rows.Add();
 
-                        // Adds a new row
-                        row = dataGridView2.Rows[rowId];
-                    
-                        // Add the data
-                        row.Cells["expAssetsColumn"].Value = str.Replace(txtUncooked.Text, "");
-                        
+                expassets = files; //Stores files to a IEnumerable<string>
 
-                        Console.WriteLine(str);
+                //Clears the table before filling
+                dataGridView2.Rows.Clear();
+                dataGridView2.Refresh();
 
-                    }
-                    Console.WriteLine("--- Exportable Assets Loaded ---");
-                    
-                    SetFontStyle(txtExpDir, "White", false);
-                
+                foreach (string str in files)
+                {
+                    rowId = dataGridView2.Rows.Add();
+
+                    // Adds a new row
+                    row = dataGridView2.Rows[rowId];
+
+                    // Add the data
+                    row.Cells["expAssetsColumn"].Value = str.Replace(txtUncooked.Text, "");
+
+
+                    Console.WriteLine(str);
+
+                }
+                Console.WriteLine("--- Exportable Assets Loaded ---");
+
+                SetFontStyle(txtExpDir, "White", false);
+
             }
         }
 
@@ -867,10 +1002,10 @@ namespace CapaOven
             Process[] processes = null;
             string[] args = null;
 
-                     
+
             int i = 0;
             string strOut;
-            
+
 
             if (txtWcc.Text == noWccPath)
             {
@@ -898,7 +1033,7 @@ namespace CapaOven
 
             if (expassets != null)
             {
-               Array.Resize(ref processes, expassets.Count());
+                Array.Resize(ref processes, expassets.Count());
                 Array.Resize(ref args, expassets.Count());
                 //Prepare outStrings
 
@@ -919,11 +1054,11 @@ namespace CapaOven
                             + " export " + "-depot=" + "\"" + txtUncooked.Text + "\""
                             + " -file=" + "\"" + str.Replace(txtUncooked.Text + @"\", "") + "\""
                             + " -out=" + "\"" + strOut + "\"";
-                       if (str.EndsWith(".w2mesh"))
-                          {
-                               args[i] = args[i] + " -fbx=" + comboBox2.Text;
-                          }
-                                           
+                        if (str.EndsWith(".w2mesh"))
+                        {
+                            args[i] = args[i] + " -fbx=" + comboBox2.Text;
+                        }
+
                     }
 
                     i++;
@@ -944,12 +1079,14 @@ namespace CapaOven
             {
                 Console.WriteLine("ERROR --- No Exportable Assets found in the selected folder!");
                 return;
-            }     
-            
+            }
+
         }
 
-        public void RunProcessesSequence(Process[] procs, string[]args, int i, string op)
+        public void RunProcessesSequence(Process[] procs, string[] args, int i, string op)
         {
+            string src;
+            string dest;
 
             if (args[i] == null)
             {
@@ -960,7 +1097,51 @@ namespace CapaOven
                 }
                 else
                 {
-                    Console.WriteLine("\r\n\nINFO --- "+ op + " Done!");
+                    Console.WriteLine("\r\n\nINFO --- " + op + " Done!");
+
+                    if (op == "Build mod" && checkBox8.Checked == true)
+                    {
+
+
+                        src = txtModFolder.Text + @"\packed\" + txtModName.Text;
+
+                        dest = ConfigurationManager.AppSettings["ModsPath"];
+                        dest = dest + @"\" + txtModName.Text;
+
+                        if (checkBox5.Checked == true)
+                        {
+                            src = src + @"\content\texture.cache";
+                            dest = dest + @"\content\texture.cache";
+
+                            if (checkBox6.Checked == true)
+                            {
+                                dest = dest.Replace(@"The Witcher 3\mods", @"The Witcher 3\DLC");
+                            }
+                            if (File.Exists(dest))
+                            {
+                                File.Delete(dest);
+                                File.Copy(src, dest);
+                                Console.WriteLine("\r\n\nINFO --- Copied texture.cache to " + dest);
+                            }
+                            else if (!File.Exists(dest) && Directory.Exists(dest.Replace("texture.cache", "")))
+                            {
+                                File.Copy(src, dest);
+                                Console.WriteLine("\r\n\nINFO --- Copied texture.cache to " + dest);
+                            }
+                            else
+                            {
+                                Console.WriteLine("\r\n\nERROR --- Specified Mod/DLC Name is not Installed");
+                            }
+
+                        }
+                        else
+                        {
+
+                            CopyDir copyvar = new CopyDir();
+                            copyvar.Copy(src, dest);
+                            Console.WriteLine("\r\n\nINFO --- Mod Installed to " + dest);
+                        }
+                    }
                 }
             }
             else
@@ -998,6 +1179,49 @@ namespace CapaOven
                     else
                     {
                         Console.WriteLine("\r\n\nINFO --- " + op + " Done!");
+
+                        if (op == "Build mod" && checkBox8.Checked == true)
+                        {
+
+                            src = txtModFolder.Text + @"\packed\" + txtModName.Text;
+
+                            dest = ConfigurationManager.AppSettings["ModsPath"];
+                            dest = dest + @"\" + txtModName.Text;
+
+                            if (checkBox5.Checked == true)
+                            {
+                                src = src + @"\content\texture.cache";
+                                dest = dest + @"\content\texture.cache";
+
+                                if (checkBox6.Checked == true)
+                                {
+                                    src = src.Replace(@"The Witcher 3\mods", @"The Witcher 3\DLC");
+                                }
+                                if (File.Exists(dest))
+                                {
+                                    File.Delete(dest);
+                                    File.Copy(src, dest);
+                                    Console.WriteLine("\r\n\nINFO --- Copied texture.cache to " + dest);
+                                }
+                                else if (!File.Exists(dest) && Directory.Exists(dest.Replace("texture.cache", "")))
+                                {
+                                    File.Copy(src, dest);
+                                    Console.WriteLine("\r\n\nINFO --- Copied texture.cache to " + dest);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("\r\n\nERROR --- Specified Mod/DLC Name is not Installed");
+                                }
+
+                            }
+                            else
+                            {
+
+                                CopyDir copyvar = new CopyDir();
+                                copyvar.Copy(src, dest);
+                                Console.WriteLine("\r\n\nINFO --- Mod Installed to " + dest);
+                            }
+                        }
                     }
                 };
             }
@@ -1063,48 +1287,319 @@ namespace CapaOven
 
                     Console.WriteLine(str);
                 }
-                Console.WriteLine("--- Exportable Assets Refreshed---");
+                Console.WriteLine("--- Exportable Assets Refreshed ---");
             }
         }
-    }
 
-    public class TextBoxWriter : TextWriter
-    {
-        TextBox _output;
-
-        public TextBoxWriter(TextBox output)
+        private void checkBox8_CheckedChanged(object sender, EventArgs e)
         {
-            _output = output;
-        }
+            string test;
+            test = ConfigurationManager.AppSettings["ModsPath"];
 
-        public override void WriteLine(string value)
-        {
-            Write(value + System.Console.Out.NewLine);
-        }
+            if (test == null) {
+                Console.WriteLine(@"--- Select your 'The Witcher 3\Mods' folder ---");
+                CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+                dialog.Title = @"Select your 'The Witcher 3\Mods' folder";
+                dialog.IsFolderPicker = true;
+                if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                {
+                    Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
 
-        public override void Write(string value)
-        {
-            if (_output.InvokeRequired)
+                    config.AppSettings.Settings.Remove("ModsPath");
+                    config.AppSettings.Settings.Add("ModsPath", dialog.FileName);
+
+                    config.Save(ConfigurationSaveMode.Modified);
+                    Console.WriteLine(@"INFO --- Mods folder path Saved! ---");
+                    checkBox5.Enabled = true;
+
+                }
+                else
+                {
+                    checkBox8.Checked = false;
+                    checkBox5.Enabled = false;
+
+                }
+            }
+
+            if (checkBox8.Checked == true)
             {
-                _output.BeginInvoke((Action<string>)Write, value);
+                checkBox5.Enabled = true;
+
             }
-            else {
-                _output.AppendText(value);
+            else
+            {
+                checkBox5.Enabled = false;
+                checkBox5.Checked = false;
+
             }
         }
 
-        public override void Write(char value)
+        private void checkBox5_CheckedChanged(object sender, EventArgs e)
         {
-            Write(value.ToString());
+            if (checkBox5.Checked)
+            {
+                checkBox6.Enabled = true;
+            }
+            else
+            {
+                checkBox6.Enabled = false;
+                checkBox6.Checked = false;
+            }
         }
 
-        public override Encoding Encoding
+        private void button5_Click_1(object sender, EventArgs e)
         {
-            get { return Encoding.UTF8; }
-        }
-    }
+            
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                txtWorkspace.Text = dialog.FileName;
 
-}
+                Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
+
+                config.AppSettings.Settings.Remove("WorkspacePath");
+                config.AppSettings.Settings.Add("WorkspacePath", txtWorkspace.Text);
+
+                config.Save(ConfigurationSaveMode.Modified);
+
+                SetFontStyle(txtWorkspace, "White", false);
+
+                RefreshComboMods();
+            }
+        }
+
+        private void RefreshComboMods()
+        {
+            string item;
+            string[] directories = null;
+            directories = Directory.GetDirectories(txtWorkspace.Text);
+            comboModname.Items.Clear();
+            foreach (string d in directories)
+            {
+                if (Directory.Exists(d + @"\modded"))
+                {
+                    item = d.Replace(txtWorkspace.Text + @"\", "");
+                    comboModname.Items.Add(item);
+                }
+
+            }
+        }
+
+        private void button12_Click_1(object sender, EventArgs e)
+        {
+            IEnumerable<string> filenames;
+            filenames = null;
+            DialogResult result;
+
+
+            if (comboModname.Text == noComboModname)
+            {
+                Console.WriteLine("\nERROR --- Mod name not Specified! ---");
+            }
+            else if (txtUncooked.Text == noUncookedPath)
+            {
+                Console.WriteLine("\nERROR --- Uncooked folder needs to be set! ---");
+            }
+            else if (txtWorkspace.Text == noWorkspace)
+            {
+                Console.WriteLine("\nERROR --- No Workspace was set! ---");
+            }
+            else
+            {
+                CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+                dialog.IsFolderPicker = false;
+                dialog.Multiselect = true;
+                dialog.InitialDirectory = txtUncooked.Text;
+
+                string moddir, outfile, outdir;
+                moddir = txtWorkspace.Text +@"\" + comboModname.Text + @"\modded";
+                
+                if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                {
+
+                    filenames = dialog.FileNames;
+
+                                
+                    foreach (string asset in filenames)
+                    {
+                    
+                        if (File.Exists(asset.Replace(txtUncooked.Text, moddir)))
+                        {
+                             result = MessageBox.Show("\n\nFile " + asset + " already exist. \n\nWould you like to replace the file?" , "Warning!",MessageBoxButtons.YesNo);
+                            if (result == DialogResult.Yes)
+                            {
+                                File.Delete(asset.Replace(txtUncooked.Text, moddir));
+                                File.Copy(asset, asset.Replace(txtUncooked.Text, moddir));
+                                Console.WriteLine("\nFile added - " + asset.Replace(txtUncooked.Text, moddir));
+                            }
+                        
+                        }
+                        else
+                        {
+                            outfile = Path.GetFileName(asset);
+                            outdir = asset.Replace(txtUncooked.Text, moddir);
+                            outdir = outdir.Replace(outfile,"");
+                            if (!Directory.Exists(moddir))
+                            {
+                                Console.WriteLine("\n[INFO] --- Mod Created: " + comboModname.Text);
+                            }
+                            Directory.CreateDirectory(outdir);
+                            File.Copy(asset, asset.Replace(txtUncooked.Text, moddir));
+                            Console.WriteLine("\nFile added - " + asset.Replace(txtUncooked.Text, moddir));
+
+                            RefreshComboMods();
+                        }
+                    }
+                }
+            }
+        }
+
+        public class TextBoxWriter : TextWriter
+        {
+            TextBox _output;
+
+            public TextBoxWriter(TextBox output)
+            {
+                _output = output;
+            }
+
+            public override void WriteLine(string value)
+            {
+                Write(value + System.Console.Out.NewLine);
+            }
+
+            public override void Write(string value)
+            {
+                if (_output.InvokeRequired)
+                {
+                    _output.BeginInvoke((Action<string>)Write, value);
+                }
+                else {
+                    _output.AppendText(value);
+                }
+            }
+
+            public override void Write(char value)
+            {
+                Write(value.ToString());
+            }
+
+            public override Encoding Encoding
+            {
+                get { return Encoding.UTF8; }
+            }
+        }
+
+        class CopyDir
+        {
+            public void Copy(string sourceDirectory, string targetDirectory)
+            {
+                DirectoryInfo diSource = new DirectoryInfo(sourceDirectory);
+                DirectoryInfo diTarget = new DirectoryInfo(targetDirectory);
+
+                CopyAll(diSource, diTarget);
+            }
+
+            public void CopyAll(DirectoryInfo source, DirectoryInfo target)
+            {
+                Directory.CreateDirectory(target.FullName);
+
+                // Copy each file into the new directory.
+                foreach (FileInfo fi in source.GetFiles())
+                {
+                    Console.WriteLine(@"Copied {0}\{1}", target.FullName, fi.Name);
+                    fi.CopyTo(Path.Combine(target.FullName, fi.Name), true);
+                }
+
+                // Copy each subdirectory using recursion.
+                foreach (DirectoryInfo diSourceSubDir in source.GetDirectories())
+                {
+                    DirectoryInfo nextTargetSubDir =
+                        target.CreateSubdirectory(diSourceSubDir.Name);
+                    CopyAll(diSourceSubDir, nextTargetSubDir);
+                }
+            }
+
+            // Output will vary based on the contents of the source directory.
+        }
+
+        private void buttonLoadtoCook_Click(object sender, EventArgs e)
+        {
+            if (comboModname.Text == noComboModname)
+            {
+                Console.WriteLine("\nERROR --- Mod not Selected! ---");
+            }
+            else if (txtUncooked.Text == noUncookedPath)
+            {
+                Console.WriteLine("\nERROR --- Uncooked folder needs to be set! ---");
+            }
+            else if (txtWorkspace.Text == noWorkspace)
+            {
+                Console.WriteLine("\nERROR --- No Workspace was set! ---");
+            }
+            else
+            {
+                tabControl1.SelectedIndex = 0;
+                txtModName.Text = comboModname.Text;
+                txtModFolder.Text = txtWorkspace.Text + @"\" + comboModname.Text;
+                RefreshCookAssets();
+            }
+        }
+
+        private void buttonDeleteMod_Click(object sender, EventArgs e)
+        {
+            string modpath = txtWorkspace.Text + @"\" + comboModname.Text;
+
+            if (Directory.Exists(modpath))
+            {
+                DialogResult result = MessageBox.Show("You are about to delete the mod: \n\n" + comboModname.Text + "\n\nAre you sure you want to delete this mod?", "Warning!", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    Directory.Delete(modpath,true);
+                    Console.WriteLine("\nINFO --- Mod " + comboModname.Text + " ---");
+                    comboModname.Text = noComboModname;
+                    SetFontStyleCombo(comboModname, "Gray", true);
+                    RefreshComboMods();
+                                        
+                }
+            }
+        }
+
+        private void buttonOpenMod_Click(object sender, EventArgs e)
+        {
+            string modpath = txtWorkspace.Text + @"\" + comboModname.Text;
+            string windir;
+
+            if (Directory.Exists(modpath)){
+                windir = Environment.GetEnvironmentVariable("windir");
+                Process.Start(windir + @"\Explorer.exe", modpath);
+            }
+            else
+            {
+                Console.WriteLine("\nERROR --- Mod folder not found! ---");
+            }
+
+        }
+
+        private void buttonOpenUncooked_Click(object sender, EventArgs e)
+        {
+            
+            string windir;
+
+            if (txtUncooked.Text == noUncookedPath)
+            {
+                Console.WriteLine("\nERROR --- Uncooked folder needs to be set! ---");
+            }
+            else
+            {
+                windir = Environment.GetEnvironmentVariable("windir");
+                Process.Start(windir + @"\Explorer.exe", txtUncooked.Text);
+            }
+            
+        }
+    }//End Form
+}//End Namespace
 /*
  Find installation path
  

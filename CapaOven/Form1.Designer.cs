@@ -32,8 +32,8 @@ namespace CapaOven
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.txtWcc = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -48,9 +48,15 @@ namespace CapaOven
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label7 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.checkBox8 = new System.Windows.Forms.CheckBox();
+            this.checkBox5 = new System.Windows.Forms.CheckBox();
+            this.checkBox6 = new System.Windows.Forms.CheckBox();
+            this.buttonCreateMod = new System.Windows.Forms.Button();
+            this.buttonLoadtoCook = new System.Windows.Forms.Button();
+            this.buttonDeleteMod = new System.Windows.Forms.Button();
             this.toolTip2 = new System.Windows.Forms.ToolTip(this.components);
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -83,6 +89,7 @@ namespace CapaOven
             this.button7 = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.assetsColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.texturetypeColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
@@ -95,6 +102,15 @@ namespace CapaOven
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.buttonOpenMod = new System.Windows.Forms.Button();
+            this.buttonOpenUncooked = new System.Windows.Forms.Button();
+            this.label16 = new System.Windows.Forms.Label();
+            this.txtWorkspace = new System.Windows.Forms.TextBox();
+            this.button5 = new System.Windows.Forms.Button();
+            this.label17 = new System.Windows.Forms.Label();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.comboModname = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage3.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -103,9 +119,12 @@ namespace CapaOven
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.tabPage4.SuspendLayout();
+            this.groupBox8.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -198,8 +217,9 @@ namespace CapaOven
             // 
             // outBox
             // 
+            this.outBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.outBox.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.outBox.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.outBox.ForeColor = System.Drawing.Color.White;
             this.outBox.Location = new System.Drawing.Point(0, 620);
             this.outBox.Multiline = true;
@@ -219,7 +239,9 @@ namespace CapaOven
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pictureBox1.Image = global::CapaOven.Properties.Resources.oven2k;
             this.pictureBox1.InitialImage = null;
             this.pictureBox1.Location = new System.Drawing.Point(747, -19);
@@ -231,18 +253,32 @@ namespace CapaOven
             // 
             // label7
             // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(901, 96);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(34, 13);
             this.label7.TabIndex = 14;
-            this.label7.Text = "v0.7b";
+            this.label7.Text = "v0.8b";
             // 
             // toolTip1
             // 
             this.toolTip1.BackColor = System.Drawing.Color.Black;
             this.toolTip1.ForeColor = System.Drawing.SystemColors.Highlight;
             this.toolTip1.ToolTipTitle = "Why is this useful?";
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Checked = true;
+            this.checkBox4.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox4.Location = new System.Drawing.Point(6, 35);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(88, 17);
+            this.checkBox4.TabIndex = 20;
+            this.checkBox4.Text = "Just selected";
+            this.toolTip1.SetToolTip(this.checkBox4, "If you uncheck this you\'ll be exporting ALL assets listed");
+            this.checkBox4.UseVisualStyleBackColor = true;
             // 
             // checkBox2
             // 
@@ -266,18 +302,82 @@ namespace CapaOven
             this.toolTip1.SetToolTip(this.checkBox3, resources.GetString("checkBox3.ToolTip"));
             this.checkBox3.UseVisualStyleBackColor = true;
             // 
-            // checkBox4
+            // checkBox8
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Checked = true;
-            this.checkBox4.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox4.Location = new System.Drawing.Point(6, 35);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(88, 17);
-            this.checkBox4.TabIndex = 20;
-            this.checkBox4.Text = "Just selected";
-            this.toolTip1.SetToolTip(this.checkBox4, "If you uncheck this you\'ll be exporting ALL assets listed");
-            this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkBox8.AutoSize = true;
+            this.checkBox8.Location = new System.Drawing.Point(6, 28);
+            this.checkBox8.Name = "checkBox8";
+            this.checkBox8.Size = new System.Drawing.Size(65, 17);
+            this.checkBox8.TabIndex = 20;
+            this.checkBox8.Text = "Enabled";
+            this.toolTip1.SetToolTip(this.checkBox8, "Enabling this will auto install the cooked mod");
+            this.checkBox8.UseVisualStyleBackColor = true;
+            this.checkBox8.CheckedChanged += new System.EventHandler(this.checkBox8_CheckedChanged);
+            // 
+            // checkBox5
+            // 
+            this.checkBox5.AutoSize = true;
+            this.checkBox5.Enabled = false;
+            this.checkBox5.Location = new System.Drawing.Point(6, 58);
+            this.checkBox5.Name = "checkBox5";
+            this.checkBox5.Size = new System.Drawing.Size(113, 17);
+            this.checkBox5.TabIndex = 21;
+            this.checkBox5.Text = "Just texture.cache";
+            this.toolTip1.SetToolTip(this.checkBox5, "When you\'re working with W3Edit(Wolven-Kit)\r\nSometimes you need just to copy the " +
+        "texture.cache\r\nFor this to work correctly you need to set the \"Mod Name\"\r\nTo the" +
+        " same name as the installed W3Edit mod.");
+            this.checkBox5.UseVisualStyleBackColor = true;
+            this.checkBox5.CheckedChanged += new System.EventHandler(this.checkBox5_CheckedChanged);
+            // 
+            // checkBox6
+            // 
+            this.checkBox6.AutoSize = true;
+            this.checkBox6.Enabled = false;
+            this.checkBox6.Location = new System.Drawing.Point(6, 88);
+            this.checkBox6.Name = "checkBox6";
+            this.checkBox6.Size = new System.Drawing.Size(96, 17);
+            this.checkBox6.TabIndex = 22;
+            this.checkBox6.Text = "Is Custom DLC";
+            this.toolTip1.SetToolTip(this.checkBox6, "Using this option will make it copy the texture.cache to a custom DLC\r\nFor this t" +
+        "o work correctly, set the \"Mod Name\" as the name of the DLC");
+            this.checkBox6.UseVisualStyleBackColor = true;
+            // 
+            // buttonCreateMod
+            // 
+            this.buttonCreateMod.ForeColor = System.Drawing.Color.Black;
+            this.buttonCreateMod.Location = new System.Drawing.Point(6, 115);
+            this.buttonCreateMod.Name = "buttonCreateMod";
+            this.buttonCreateMod.Size = new System.Drawing.Size(109, 39);
+            this.buttonCreateMod.TabIndex = 23;
+            this.buttonCreateMod.Text = "Create Mod and Add Assets";
+            this.toolTip1.SetToolTip(this.buttonCreateMod, "If the mod does not exist it\'s folder will be created automatically!\r\nClick to ad" +
+        "d assets to the specified mod\r\n");
+            this.buttonCreateMod.UseVisualStyleBackColor = true;
+            this.buttonCreateMod.Click += new System.EventHandler(this.button12_Click_1);
+            // 
+            // buttonLoadtoCook
+            // 
+            this.buttonLoadtoCook.ForeColor = System.Drawing.Color.Black;
+            this.buttonLoadtoCook.Location = new System.Drawing.Point(130, 115);
+            this.buttonLoadtoCook.Name = "buttonLoadtoCook";
+            this.buttonLoadtoCook.Size = new System.Drawing.Size(109, 39);
+            this.buttonLoadtoCook.TabIndex = 26;
+            this.buttonLoadtoCook.Text = "Load to \r\n\"Cook Mod\"";
+            this.toolTip1.SetToolTip(this.buttonLoadtoCook, "Load the mod switching to the Cook Mod tab");
+            this.buttonLoadtoCook.UseVisualStyleBackColor = true;
+            this.buttonLoadtoCook.Click += new System.EventHandler(this.buttonLoadtoCook_Click);
+            // 
+            // buttonDeleteMod
+            // 
+            this.buttonDeleteMod.ForeColor = System.Drawing.Color.Black;
+            this.buttonDeleteMod.Location = new System.Drawing.Point(256, 115);
+            this.buttonDeleteMod.Name = "buttonDeleteMod";
+            this.buttonDeleteMod.Size = new System.Drawing.Size(109, 39);
+            this.buttonDeleteMod.TabIndex = 27;
+            this.buttonDeleteMod.Text = "Delete Mod";
+            this.toolTip1.SetToolTip(this.buttonDeleteMod, "Deletes the selected mod folder");
+            this.buttonDeleteMod.UseVisualStyleBackColor = true;
+            this.buttonDeleteMod.Click += new System.EventHandler(this.buttonDeleteMod_Click);
             // 
             // toolTip2
             // 
@@ -550,14 +650,14 @@ namespace CapaOven
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.expAssetsColumn});
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.DarkGray;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.DarkGray;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridView2.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridView2.Location = new System.Drawing.Point(0, 103);
             this.dataGridView2.Name = "dataGridView2";
@@ -659,6 +759,7 @@ namespace CapaOven
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.DimGray;
+            this.tabPage1.Controls.Add(this.groupBox7);
             this.tabPage1.Controls.Add(this.dataGridView1);
             this.tabPage1.Controls.Add(this.button3);
             this.tabPage1.Controls.Add(this.label4);
@@ -676,6 +777,19 @@ namespace CapaOven
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Cook Mod";
             // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.checkBox6);
+            this.groupBox7.Controls.Add(this.checkBox5);
+            this.groupBox7.Controls.Add(this.checkBox8);
+            this.groupBox7.ForeColor = System.Drawing.Color.White;
+            this.groupBox7.Location = new System.Drawing.Point(808, 264);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(123, 126);
+            this.groupBox7.TabIndex = 23;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Auto Install Options";
+            // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
@@ -684,14 +798,14 @@ namespace CapaOven
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.assetsColumn,
             this.texturetypeColumn});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridView1.Location = new System.Drawing.Point(0, 103);
             this.dataGridView1.Name = "dataGridView1";
@@ -760,7 +874,7 @@ namespace CapaOven
             // button3
             // 
             this.button3.ForeColor = System.Drawing.Color.Black;
-            this.button3.Location = new System.Drawing.Point(808, 395);
+            this.button3.Location = new System.Drawing.Point(808, 396);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(123, 66);
             this.button3.TabIndex = 10;
@@ -840,7 +954,7 @@ namespace CapaOven
             this.groupBox3.Controls.Add(this.checkBox2);
             this.groupBox3.Controls.Add(this.checkBox1);
             this.groupBox3.ForeColor = System.Drawing.Color.White;
-            this.groupBox3.Location = new System.Drawing.Point(808, 219);
+            this.groupBox3.Location = new System.Drawing.Point(808, 102);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(123, 156);
             this.groupBox3.TabIndex = 21;
@@ -849,14 +963,124 @@ namespace CapaOven
             // 
             // tabControl1
             // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Location = new System.Drawing.Point(0, 116);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(954, 505);
             this.tabControl1.TabIndex = 11;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.BackColor = System.Drawing.Color.DimGray;
+            this.tabPage4.Controls.Add(this.buttonDeleteMod);
+            this.tabPage4.Controls.Add(this.buttonLoadtoCook);
+            this.tabPage4.Controls.Add(this.buttonOpenMod);
+            this.tabPage4.Controls.Add(this.buttonOpenUncooked);
+            this.tabPage4.Controls.Add(this.buttonCreateMod);
+            this.tabPage4.Controls.Add(this.label16);
+            this.tabPage4.Controls.Add(this.txtWorkspace);
+            this.tabPage4.Controls.Add(this.button5);
+            this.tabPage4.Controls.Add(this.label17);
+            this.tabPage4.Controls.Add(this.groupBox8);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(946, 479);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Workspace Manager";
+            // 
+            // buttonOpenMod
+            // 
+            this.buttonOpenMod.ForeColor = System.Drawing.Color.Black;
+            this.buttonOpenMod.Location = new System.Drawing.Point(412, 115);
+            this.buttonOpenMod.Name = "buttonOpenMod";
+            this.buttonOpenMod.Size = new System.Drawing.Size(109, 39);
+            this.buttonOpenMod.TabIndex = 25;
+            this.buttonOpenMod.Text = "Open\r\nMod Folder";
+            this.buttonOpenMod.UseVisualStyleBackColor = true;
+            this.buttonOpenMod.Click += new System.EventHandler(this.buttonOpenMod_Click);
+            // 
+            // buttonOpenUncooked
+            // 
+            this.buttonOpenUncooked.ForeColor = System.Drawing.Color.Black;
+            this.buttonOpenUncooked.Location = new System.Drawing.Point(536, 115);
+            this.buttonOpenUncooked.Name = "buttonOpenUncooked";
+            this.buttonOpenUncooked.Size = new System.Drawing.Size(109, 39);
+            this.buttonOpenUncooked.TabIndex = 24;
+            this.buttonOpenUncooked.Text = "Open\r\nUncooked Folder";
+            this.buttonOpenUncooked.UseVisualStyleBackColor = true;
+            this.buttonOpenUncooked.Click += new System.EventHandler(this.buttonOpenUncooked_Click);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(13, 63);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(59, 13);
+            this.label16.TabIndex = 22;
+            this.label16.Text = "Mod Name";
+            // 
+            // txtWorkspace
+            // 
+            this.txtWorkspace.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.txtWorkspace.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtWorkspace.ForeColor = System.Drawing.Color.Gray;
+            this.txtWorkspace.Location = new System.Drawing.Point(117, 28);
+            this.txtWorkspace.Name = "txtWorkspace";
+            this.txtWorkspace.Size = new System.Drawing.Size(439, 20);
+            this.txtWorkspace.TabIndex = 19;
+            this.txtWorkspace.Text = "Browse the folder where you want or stores your mods";
+            // 
+            // button5
+            // 
+            this.button5.ForeColor = System.Drawing.Color.Black;
+            this.button5.Location = new System.Drawing.Point(563, 26);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 17;
+            this.button5.Text = "Browse...";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click_1);
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(13, 31);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(81, 13);
+            this.label17.TabIndex = 20;
+            this.label17.Text = "Workspace Dir.";
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox8.Controls.Add(this.comboModname);
+            this.groupBox8.ForeColor = System.Drawing.Color.White;
+            this.groupBox8.Location = new System.Drawing.Point(3, 3);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(642, 95);
+            this.groupBox8.TabIndex = 18;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Workspace Settings";
+            // 
+            // comboModname
+            // 
+            this.comboModname.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.comboModname.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboModname.ForeColor = System.Drawing.Color.Gray;
+            this.comboModname.FormattingEnabled = true;
+            this.comboModname.Location = new System.Drawing.Point(114, 57);
+            this.comboModname.Name = "comboModname";
+            this.comboModname.Size = new System.Drawing.Size(439, 21);
+            this.comboModname.TabIndex = 0;
+            this.comboModname.Text = "Type a Mod Name or Select a Mod";
+            this.comboModname.Enter += new System.EventHandler(this.comboModname_OnFocusEnter);
+            this.comboModname.Leave += new System.EventHandler(this.comboModname_OnFocusLeave);
             // 
             // Form1
             // 
@@ -866,7 +1090,6 @@ namespace CapaOven
             this.ClientSize = new System.Drawing.Size(954, 825);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.outBox);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label3);
@@ -877,10 +1100,9 @@ namespace CapaOven
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.outBox);
             this.ForeColor = System.Drawing.Color.White;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "W3Oven";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -897,10 +1119,15 @@ namespace CapaOven
             this.groupBox5.PerformLayout();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.tabControl1.ResumeLayout(false);
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
+            this.groupBox8.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -925,8 +1152,40 @@ namespace CapaOven
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ToolTip toolTip2;
         private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.TextBox txtUncookFrom;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.TextBox txtUncookTo;
+        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn expAssetsColumn;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.TextBox txtExpOutDir;
+        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox txtExpDir;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.CheckBox checkBox6;
+        private System.Windows.Forms.CheckBox checkBox5;
+        private System.Windows.Forms.CheckBox checkBox8;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn assetsColumn;
         private System.Windows.Forms.DataGridViewComboBoxColumn texturetypeColumn;
@@ -938,38 +1197,22 @@ namespace CapaOven
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.TextBox txtUncookTo;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.TextBox txtUncookFrom;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.TextBox txtExpOutDir;
-        private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox txtExpDir;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.Button button11;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn expAssetsColumn;
-        private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.Button buttonCreateMod;
+        private System.Windows.Forms.Button buttonLoadtoCook;
+        private System.Windows.Forms.Button buttonOpenMod;
+        private System.Windows.Forms.Button buttonOpenUncooked;
+        private System.Windows.Forms.Button buttonDeleteMod;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TextBox txtWorkspace;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.ComboBox comboModname;
     }
 }
 
